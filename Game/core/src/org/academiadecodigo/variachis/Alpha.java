@@ -142,6 +142,13 @@ public class Alpha extends Game {
         yourBitmapFontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         yourBitmapFontName.draw(batch, yourScoreName, 20, 450);
         batch.draw(catcher, rCatcher.x, rCatcher.y);
+
+        batch.end();
+
+        timer();
+
+        batch.begin();
+
         batch.draw(baby, bCatcher.x, bCatcher.y);
 
         for (Rectangle presentDrop : presents) {
@@ -157,7 +164,7 @@ public class Alpha extends Game {
         batch.end();
 
 
-        timer();
+
 
 
         camera.update();
