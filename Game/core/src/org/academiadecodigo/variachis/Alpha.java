@@ -26,6 +26,7 @@ import java.util.Iterator;
 public class Alpha extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
+    private MainMenuScreen mainMenuScreen;
 
 
     @Override
@@ -33,7 +34,8 @@ public class Alpha extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
 
-        this.setScreen(new MainMenuScreen(this));
+        mainMenuScreen = new MainMenuScreen(this);
+        this.setScreen(mainMenuScreen);
 
 
     }
@@ -50,5 +52,7 @@ public class Alpha extends Game {
         font.dispose();
     }
 
-
+    public MainMenuScreen getMainMenuScreen() {
+        return mainMenuScreen;
+    }
 }

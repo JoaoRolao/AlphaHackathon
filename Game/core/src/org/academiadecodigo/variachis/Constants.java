@@ -22,4 +22,5 @@ public class Constants {
     public static final int PLAYER_SPEED = 200;
     public static final int DROP_TIME_PRESENTS = 1000000000;
     public static final int DROP_TIME_SOCKS = 1000000000;
+
 }

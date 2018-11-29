@@ -49,9 +49,13 @@ public class GameScreen implements Screen {
     private ShapeRenderer shapeRenderer;
     private float timeSeconds = 0f;
     private float currentTime = 0f;
+    private boolean isOver = false;
+    private Alpha alpha;
+    private GameOverScreen gameOverScreen;
 
 
-    public GameScreen(Alpha alpha){
+    public GameScreen(Alpha alpha) {
+        this.alpha = alpha;
         this.batch = alpha.batch;
         this.font = alpha.font;
     }
@@ -100,6 +104,7 @@ public class GameScreen implements Screen {
 
         shapeRenderer = new ShapeRenderer();
 
+        gameOverScreen = new GameOverScreen(alpha, this);
 
         spawnPresents();
         spawnSocks();
@@ -120,6 +125,10 @@ public class GameScreen implements Screen {
         batch.draw(catcher, rCatcher.x, rCatcher.y);
 
         batch.end();
+
+        if (isOver) {
+            alpha.setScreen(gameOverScreen);
+        }
 
         timer();
 
@@ -245,8 +254,9 @@ public class GameScreen implements Screen {
             shapeRenderer.setColor(Color.RED);
         }
 
-        if (barWidth <= 1) {
-            //game over logic
+        if (barWidth >= 0) {
+            isOver = true;
+
 
         }
 
@@ -276,5 +286,9 @@ public class GameScreen implements Screen {
         socks.add(sock);
         lastDropTime1 = TimeUtils.nanoTime();
 
+    }
+
+    public int getScore() {
+        return score;
     }
 }
