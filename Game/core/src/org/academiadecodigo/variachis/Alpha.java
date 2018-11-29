@@ -4,9 +4,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,21 +29,32 @@ public class Alpha extends Game {
     private Texture present;
     private Texture sock;
     private Long lastDropTime;
+    private Long lastDropTime1;
     private OrthographicCamera camera;
     private Array<Rectangle> socks;
     private Array<Rectangle> presents;
-
+    private Sound presentSound;
+    private Sound sockSound;
+    private String yourScoreName;
+    private BitmapFont yourBitmapFontName;
+    private int score;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
 
+        score = 0;
+        yourScoreName = "score: 0";
+        yourBitmapFontName = new BitmapFont();
+
         //path to the background image
-        backgroundImage = new Texture("badlogic.jpg");
+        backgroundImage = new Texture("background.jpg");
         backgroundSprite = new Sprite(backgroundImage);
         catcher = new Texture(Gdx.files.internal("freddy.png"));
         sock = new Texture(Gdx.files.internal("sock.png"));
         present = new Texture(Gdx.files.internal("present.png"));
+        presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
+        sockSound = Gdx.audio.newSound(Gdx.files.internal("catchSockSound.wav"));
 
         rCatcher = new Rectangle();
         rCatcher.x = 800 / 2 - 64 / 2;
@@ -56,6 +69,7 @@ public class Alpha extends Game {
         camera.setToOrtho(false, 800, 480);
 
         spawnPresents();
+        spawnSocks();
 
 
     }
@@ -65,10 +79,19 @@ public class Alpha extends Game {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        batch.setProjectionMatrix(camera.combined);
+        backgroundSprite.draw(batch);
+        yourBitmapFontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        yourBitmapFontName.draw(batch, yourScoreName, 20, 450);
         batch.draw(catcher, rCatcher.x, rCatcher.y);
 
-        for (Rectangle raindrop : presents) {
-            batch.draw(present, raindrop.x, raindrop.y);
+        for (Rectangle presentDrop : presents) {
+            batch.draw(present, presentDrop.x, presentDrop.y);
+
+        }
+
+        for (Rectangle sockDrop : socks) {
+            batch.draw(sock, sockDrop.x, sockDrop.y);
 
         }
 
@@ -97,10 +120,31 @@ public class Alpha extends Game {
             if (rPresents.y + 64 < 0) iter.remove();
 
             if (rPresents.overlaps(rCatcher)) {
-
+                score++;
+                yourScoreName = "score: " + score;
+                presentSound.play();
                 iter.remove();
             }
         }
+
+
+        if (TimeUtils.nanoTime() - lastDropTime1 > 1000000000) spawnSocks();
+
+        for (Iterator<Rectangle> iter = socks.iterator(); iter.hasNext(); ) {
+            Rectangle rSocks = iter.next();
+            rSocks.y -= 200 * Gdx.graphics.getDeltaTime();
+            if (rSocks.y + 64 < 0) iter.remove();
+
+            if (rSocks.overlaps(rCatcher)) {
+                score--;
+                yourScoreName = "score: " + score;
+                sockSound.play();
+                iter.remove();
+            }
+        }
+
+
+
     }
 
     @Override
@@ -121,6 +165,18 @@ public class Alpha extends Game {
         present.height = 64;
         presents.add(present);
         lastDropTime = TimeUtils.nanoTime();
+
+    }
+
+    private void spawnSocks() {
+
+        Rectangle sock = new Rectangle();
+        sock.x = MathUtils.random(0, 800 - 64);
+        sock.y = 480;
+        sock.width = 64;
+        sock.height = 64;
+        socks.add(sock);
+        lastDropTime1 = TimeUtils.nanoTime();
 
     }
 }
