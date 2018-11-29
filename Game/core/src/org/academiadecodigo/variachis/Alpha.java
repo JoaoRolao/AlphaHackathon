@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -38,6 +40,42 @@ public class Alpha extends Game {
     private String yourScoreName;
     private BitmapFont yourBitmapFontName;
     private int score;
+    private ShapeRenderer shapeRenderer;
+    private float timeSeconds = 0f;
+    private float maxTime = -15f;
+    private float currentTime = 0f;
+
+
+    public void timer() {
+
+
+        timeSeconds += Gdx.graphics.getRawDeltaTime();
+
+
+        currentTime = maxTime + timeSeconds;
+
+        float barWidth = currentTime * 25;
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.rect(740, 450, barWidth, 10);
+        shapeRenderer.setColor(Color.WHITE);
+
+        if ((int) barWidth %2 == 0){
+            shapeRenderer.setColor(Color.RED);
+        }
+
+        if (barWidth <= 1){
+            //game over logic
+
+        }
+
+        shapeRenderer.end();
+
+    }
+
 
     @Override
     public void create() {
@@ -68,6 +106,9 @@ public class Alpha extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
+        shapeRenderer = new ShapeRenderer();
+
+
         spawnPresents();
         spawnSocks();
 
@@ -96,6 +137,10 @@ public class Alpha extends Game {
         }
 
         batch.end();
+
+
+        timer();
+
 
         camera.update();
 
@@ -142,7 +187,6 @@ public class Alpha extends Game {
                 iter.remove();
             }
         }
-
 
 
     }
