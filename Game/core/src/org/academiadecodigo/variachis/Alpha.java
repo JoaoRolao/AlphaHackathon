@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -28,8 +29,11 @@ public class Alpha extends Game {
     private Sprite backgroundSprite;
     private Texture catcher;
     private Rectangle rCatcher;
+    private Rectangle bCatcher;
     private Texture present;
     private Texture sock;
+    private Texture baby;
+    private Music loop;
     private Long lastDropTime;
     private Long lastDropTime1;
     private OrthographicCamera camera;
@@ -91,14 +95,27 @@ public class Alpha extends Game {
         catcher = new Texture(Gdx.files.internal("freddy.png"));
         sock = new Texture(Gdx.files.internal("sock.png"));
         present = new Texture(Gdx.files.internal("present.png"));
+        baby = new Texture(Gdx.files.internal("baby.png"));
         presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
         sockSound = Gdx.audio.newSound(Gdx.files.internal("catchSockSound.wav"));
+
+        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
+
+        // start the playback of the background music immediately
+        loop.setLooping(true);
+        loop.play();
 
         rCatcher = new Rectangle();
         rCatcher.x = 800 / 2 - 64 / 2;
         rCatcher.y = 20;
         rCatcher.width = 64;
         rCatcher.height = 64;
+
+        bCatcher = new Rectangle();
+        bCatcher.x = 800 - 70;
+        bCatcher.y = 480 - 70;
+        bCatcher.width = 64;
+        bCatcher.height = 64;
 
         socks = new Array<Rectangle>();
         presents = new Array<Rectangle>();
@@ -125,6 +142,7 @@ public class Alpha extends Game {
         yourBitmapFontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         yourBitmapFontName.draw(batch, yourScoreName, 20, 450);
         batch.draw(catcher, rCatcher.x, rCatcher.y);
+        batch.draw(baby, bCatcher.x, bCatcher.y);
 
         for (Rectangle presentDrop : presents) {
             batch.draw(present, presentDrop.x, presentDrop.y);
@@ -166,7 +184,8 @@ public class Alpha extends Game {
 
             if (rPresents.overlaps(rCatcher)) {
                 score++;
-                yourScoreName = "score: " + score;
+                yourScoreName = "score: " + score + " /20" ;
+                presentSound.setVolume(1, -50);
                 presentSound.play();
                 iter.remove();
             }
@@ -182,7 +201,7 @@ public class Alpha extends Game {
 
             if (rSocks.overlaps(rCatcher)) {
                 score--;
-                yourScoreName = "score: " + score;
+                yourScoreName = "score: " + score + " /20"  ;
                 sockSound.play();
                 iter.remove();
             }
@@ -197,6 +216,8 @@ public class Alpha extends Game {
         catcher.dispose();
         backgroundImage.dispose();
         present.dispose();
+        baby.dispose();
+        loop.dispose();
         sock.dispose();
     }
 
