@@ -22,5 +22,13 @@ public class Constants {
     public static final int PLAYER_SPEED = 200;
     public static final int DROP_TIME_PRESENTS = 1000000000;
     public static final int DROP_TIME_SOCKS = 1000000000;
+    public static final int PRESENT_SPAWN_X = 736;
+    public static final int PRESENT_SPAWN_Y = 480;
+    public static final int PRESENT_WIDTH = 64;
+    public static final int PRESENT_HEIGHT = 64;
+    public static final int SOCKS_SPAWN_X = 736;
+    public static final int SOCKS_SPAWN_Y = 480;
+    public static final int SOCKS_WIDTH = 64;
+    public static final int SOCKS_HEIGHT = 64;
 
 }

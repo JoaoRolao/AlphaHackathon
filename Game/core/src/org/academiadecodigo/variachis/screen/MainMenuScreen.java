@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
+import org.academiadecodigo.variachis.Constants;
 
 import java.awt.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MainMenuScreen implements Screen {
 
@@ -25,7 +27,7 @@ public class MainMenuScreen implements Screen {
         this.font = game.font;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
     }
 
 

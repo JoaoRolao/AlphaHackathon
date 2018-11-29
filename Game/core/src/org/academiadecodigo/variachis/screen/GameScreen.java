@@ -22,6 +22,7 @@ import org.academiadecodigo.variachis.Alpha;
 import org.academiadecodigo.variachis.Constants;
 
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameScreen implements Screen {
 
@@ -35,6 +36,7 @@ public class GameScreen implements Screen {
     private Texture present;
     private Texture sock;
     private Texture baby;
+    private Music loop2;
     private Music loop;
     private Long lastDropTime;
     private Long lastDropTime1;
@@ -78,8 +80,9 @@ public class GameScreen implements Screen {
         presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
         sockSound = Gdx.audio.newSound(Gdx.files.internal("catchSockSound.wav"));
 
-        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
 
+        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
+        loop2 = Gdx.audio.newMusic(Gdx.files.internal("baby_crying.mp3"));
         // start the playback of the background music immediately
         loop.setLooping(true);
         loop.play();
@@ -260,6 +263,14 @@ public class GameScreen implements Screen {
 
         }
 
+/*
+        if (barWidth >= 55) {
+           loop.stop();
+           loop2.setLooping(true);
+           loop2.play();
+
+        }
+*/
         shapeRenderer.end();
 
     }
@@ -267,10 +278,10 @@ public class GameScreen implements Screen {
     private void spawnPresents() {
 
         Rectangle present = new Rectangle();
-        present.x = MathUtils.random(0, 800 - 64);
-        present.y = 480;
-        present.width = 64;
-        present.height = 64;
+        present.x = MathUtils.random(0, Constants.PRESENT_SPAWN_X);
+        present.y = Constants.PRESENT_SPAWN_Y;
+        present.width = Constants.PRESENT_WIDTH;
+        present.height = Constants.PRESENT_HEIGHT;
         presents.add(present);
         lastDropTime = TimeUtils.nanoTime();
 
@@ -279,10 +290,10 @@ public class GameScreen implements Screen {
     private void spawnSocks() {
 
         Rectangle sock = new Rectangle();
-        sock.x = MathUtils.random(0, 800 - 64);
-        sock.y = 480;
-        sock.width = 64;
-        sock.height = 64;
+        sock.x = MathUtils.random(0, Constants.SOCKS_SPAWN_X);
+        sock.y = Constants.SOCKS_SPAWN_Y;
+        sock.width = Constants.SOCKS_WIDTH;
+        sock.height = Constants.SOCKS_HEIGHT;
         socks.add(sock);
         lastDropTime1 = TimeUtils.nanoTime();
 
