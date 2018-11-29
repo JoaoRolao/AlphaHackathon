@@ -61,7 +61,7 @@ public class Alpha extends Game {
         presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
         sockSound = Gdx.audio.newSound(Gdx.files.internal("catchSockSound.wav"));
 
-        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
+        loop = Gdx.audio.newMusic(Gdx.files.internal("loop2.mp3"));
 
         // start the playback of the background music immediately
         loop.setLooping(true);
@@ -199,5 +199,13 @@ public class Alpha extends Game {
         socks.add(sock);
         lastDropTime1 = TimeUtils.nanoTime();
 
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public BitmapFont getYourBitmapFontName() {
+        return yourBitmapFontName;
     }
 }
