@@ -30,4 +30,5 @@ public class Constants {
     public static final int SOCKS_SPAWN_Y = 480;
     public static final int SOCKS_WIDTH = 64;
     public static final int SOCKS_HEIGHT = 64;
+
 }
