@@ -1,6 +1,5 @@
 package org.academiadecodigo.variachis;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -42,11 +40,10 @@ public class Alpha extends Game {
     private Sound presentSound;
     private Sound sockSound;
     private String yourScoreName;
-    private BitmapFont yourBitmapFontName;
+    private BitmapFont font;
     private int score;
     private ShapeRenderer shapeRenderer;
     private float timeSeconds = 0f;
-    private float maxTime = -15f;
     private float currentTime = 0f;
 
 
@@ -56,7 +53,7 @@ public class Alpha extends Game {
         timeSeconds += Gdx.graphics.getRawDeltaTime();
 
 
-        currentTime = maxTime + timeSeconds;
+        currentTime = Constants.MAX_TIME + timeSeconds;
 
         float barWidth = currentTime * 25;
 
@@ -64,14 +61,14 @@ public class Alpha extends Game {
 
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.rect(740, 450, barWidth, 10);
+        shapeRenderer.rect(Constants.BAR_X, Constants.BAR_Y, barWidth, Constants.BAR_HEIGHT);
         shapeRenderer.setColor(Color.WHITE);
 
-        if ((int) barWidth %2 == 0){
+        if ((int) barWidth % 2 == 0) {
             shapeRenderer.setColor(Color.RED);
         }
 
-        if (barWidth <= 1){
+        if (barWidth <= 1) {
             //game over logic
 
         }
@@ -86,8 +83,8 @@ public class Alpha extends Game {
         batch = new SpriteBatch();
 
         score = 0;
-        yourScoreName = "score: 0";
-        yourBitmapFontName = new BitmapFont();
+        yourScoreName = "score: 0/20";
+        font = new BitmapFont();
 
         //path to the background image
         backgroundImage = new Texture("background.jpg");
@@ -106,22 +103,22 @@ public class Alpha extends Game {
         loop.play();
 
         rCatcher = new Rectangle();
-        rCatcher.x = 800 / 2 - 64 / 2;
-        rCatcher.y = 20;
-        rCatcher.width = 64;
-        rCatcher.height = 64;
+        rCatcher.x = Constants.CATCHER_X;
+        rCatcher.y = Constants.CATCHER_Y;
+        rCatcher.width = Constants.CATCHER_WIDTH;
+        rCatcher.height = Constants.CATCHER_HEIGHT;
 
         bCatcher = new Rectangle();
-        bCatcher.x = 800 - 70;
-        bCatcher.y = 480 - 70;
-        bCatcher.width = 64;
-        bCatcher.height = 64;
+        bCatcher.x = Constants.BABY_X;
+        bCatcher.y = Constants.BABY_Y;
+        bCatcher.width = Constants.BABY_WIDTH;
+        bCatcher.height = Constants.BABY_HEIGHT;
 
         socks = new Array<Rectangle>();
         presents = new Array<Rectangle>();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         shapeRenderer = new ShapeRenderer();
 
@@ -139,8 +136,8 @@ public class Alpha extends Game {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
         backgroundSprite.draw(batch);
-        yourBitmapFontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        yourBitmapFontName.draw(batch, yourScoreName, 20, 450);
+        font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
+        font.draw(batch, yourScoreName, Constants.SCORE_X, Constants.SCORE_Y);
         batch.draw(catcher, rCatcher.x, rCatcher.y);
 
         batch.end();
@@ -164,13 +161,10 @@ public class Alpha extends Game {
         batch.end();
 
 
-
-
-
         camera.update();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) rCatcher.x -= 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) rCatcher.x += 200 * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) rCatcher.x -= Constants.PLAYER_SPEED * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) rCatcher.x += Constants.PLAYER_SPEED * Gdx.graphics.getDeltaTime();
 
         if (Gdx.input.isTouched()) {
             Vector3 touchPos = new Vector3();
@@ -182,7 +176,7 @@ public class Alpha extends Game {
         if (rCatcher.x < 0) rCatcher.x = 0;
         if (rCatcher.x > 800 - 64) rCatcher.x = 800 - 64;
 
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnPresents();
+        if (TimeUtils.nanoTime() - lastDropTime > Constants.DROP_TIME_PRESENTS) spawnPresents();
 
         for (Iterator<Rectangle> iter = presents.iterator(); iter.hasNext(); ) {
             Rectangle rPresents = iter.next();
@@ -191,7 +185,7 @@ public class Alpha extends Game {
 
             if (rPresents.overlaps(rCatcher)) {
                 score++;
-                yourScoreName = "score: " + score + " /20" ;
+                yourScoreName = "score: " + score + "/20";
                 presentSound.setVolume(1, -50);
                 presentSound.play();
                 iter.remove();
@@ -199,7 +193,7 @@ public class Alpha extends Game {
         }
 
 
-        if (TimeUtils.nanoTime() - lastDropTime1 > 1000000000) spawnSocks();
+        if (TimeUtils.nanoTime() - lastDropTime1 > Constants.DROP_TIME_SOCKS) spawnSocks();
 
         for (Iterator<Rectangle> iter = socks.iterator(); iter.hasNext(); ) {
             Rectangle rSocks = iter.next();
@@ -208,7 +202,7 @@ public class Alpha extends Game {
 
             if (rSocks.overlaps(rCatcher)) {
                 score--;
-                yourScoreName = "score: " + score + " /20"  ;
+                yourScoreName = "score: " + score + "/20";
                 sockSound.play();
                 iter.remove();
             }
