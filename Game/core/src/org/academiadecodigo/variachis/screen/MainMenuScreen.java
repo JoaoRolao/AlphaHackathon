@@ -7,23 +7,22 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
-import org.academiadecodigo.variachis.Test;
 
 import java.awt.*;
 
 public class MainMenuScreen implements Screen {
 
-    private final Test game;
+    private final Alpha game;
     private SpriteBatch batch;
     private BitmapFont font;
 
     private OrthographicCamera camera;
 
-    public MainMenuScreen(Test game) {
+    public MainMenuScreen(Alpha game) {
 
         this.game = game;
-        this.batch = game.getBatch();
-        this.font = game.getYourBitmapFontName();
+        this.batch = game.batch;
+        this.font = game.font;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -50,7 +49,7 @@ public class MainMenuScreen implements Screen {
         batch.end();
 
         if (Gdx.input.isTouched()) {
-           // game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game));
             dispose();
         }
     }

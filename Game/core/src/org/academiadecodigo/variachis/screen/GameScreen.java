@@ -1,4 +1,4 @@
-package org.academiadecodigo.variachis;
+package org.academiadecodigo.variachis.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import org.academiadecodigo.variachis.Alpha;
+import org.academiadecodigo.variachis.Constants;
 
 import java.util.Iterator;
 
