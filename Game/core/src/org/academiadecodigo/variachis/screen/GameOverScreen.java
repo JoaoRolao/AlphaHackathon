@@ -3,9 +3,12 @@ package org.academiadecodigo.variachis.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
 
@@ -17,6 +20,9 @@ public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     private BitmapFont font;
     private int score;
+    private Texture backgroundImage;
+    private Sprite backgroundSprite;
+    private Sound cryingBaby;
 
     private OrthographicCamera camera;
 
@@ -34,6 +40,10 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
 
+        backgroundImage = new Texture("gameover.png");
+        backgroundSprite = new Sprite(backgroundImage);
+        cryingBaby = Gdx.audio.newSound(Gdx.files.internal("babycrying.mp3"));
+
     }
 
     @Override
@@ -46,16 +56,16 @@ public class GameOverScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font.draw(batch, "GAME OVER!!!!", 100, 150);
+        cryingBaby.play();
+        backgroundSprite.draw(batch);
         font.draw(batch, "Score: " + score, 100, 100);
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q))
             Gdx.app.exit();
 
-        if (Gdx.input.isTouched()) {
-            alpha.setScreen(alpha.getMainMenuScreen());
-            dispose();
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            alpha.setScreen(new MainMenuScreen(alpha));
         }
     }
 

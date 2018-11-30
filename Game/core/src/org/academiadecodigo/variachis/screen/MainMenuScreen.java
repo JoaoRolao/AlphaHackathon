@@ -1,10 +1,13 @@
 package org.academiadecodigo.variachis.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
 import org.academiadecodigo.variachis.Constants;
@@ -17,6 +20,8 @@ public class MainMenuScreen implements Screen {
     private final Alpha game;
     private SpriteBatch batch;
     private BitmapFont font;
+    private Texture backgroundImage;
+    private Sprite backgroundSprite;
 
     private OrthographicCamera camera;
 
@@ -34,6 +39,9 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
 
+        backgroundImage = new Texture("menu.png");
+        backgroundSprite = new Sprite(backgroundImage);
+
     }
 
     @Override
@@ -42,16 +50,13 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue(), Color.WHITE.getAlpha());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);camera.update();
 
-
-        batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
-        font.draw(batch, "Welcome to Drop!!! ", 100, 150);
-        font.draw(batch, "Tap anywhere to begin!", 100, 100);
+        batch.setProjectionMatrix(camera.combined);
+        backgroundSprite.draw(batch);
         batch.end();
 
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            game.setScreen(new InstructionsScreen(game));
             dispose();
         }
     }

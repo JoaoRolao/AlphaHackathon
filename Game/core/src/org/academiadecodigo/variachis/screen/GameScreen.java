@@ -36,7 +36,6 @@ public class GameScreen implements Screen {
     private Texture present;
     private Texture sock;
     private Texture baby;
-    private Music loop2;
     private Music loop;
     private Long lastDropTime;
     private Long lastDropTime1;
@@ -54,6 +53,7 @@ public class GameScreen implements Screen {
     private boolean isOver = false;
     private Alpha alpha;
     private GameOverScreen gameOverScreen;
+    private GameWinScreen gameWinScreen;
 
 
     public GameScreen(Alpha alpha) {
@@ -82,7 +82,6 @@ public class GameScreen implements Screen {
 
 
         loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
-        loop2 = Gdx.audio.newMusic(Gdx.files.internal("baby_crying.mp3"));
         // start the playback of the background music immediately
         loop.setLooping(true);
         loop.play();
@@ -108,6 +107,7 @@ public class GameScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
 
         gameOverScreen = new GameOverScreen(alpha, this);
+        gameWinScreen = new GameWinScreen(alpha, this);
 
         spawnPresents();
         spawnSocks();
@@ -181,6 +181,14 @@ public class GameScreen implements Screen {
                 presentSound.setVolume(1, -50);
                 presentSound.play();
                 iter.remove();
+            }
+
+            if (score == 5) {
+                alpha.setScreen(gameWinScreen);
+            }
+
+            if (score == -1) {
+                alpha.setScreen(gameOverScreen);
             }
         }
 
@@ -263,14 +271,7 @@ public class GameScreen implements Screen {
 
         }
 
-/*
-        if (barWidth >= 55) {
-           loop.stop();
-           loop2.setLooping(true);
-           loop2.play();
 
-        }
-*/
         shapeRenderer.end();
 
     }
