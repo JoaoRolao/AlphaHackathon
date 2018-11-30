@@ -5,7 +5,7 @@ public class Constants {
 
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 480;
-    public static final float MAX_TIME = -15f;
+    public static final float MAX_TIME = -30f;
     public static final int BAR_X = 740;
     public static final int BAR_Y = 445;
     public static final float BAR_HEIGHT = 10;
@@ -21,7 +21,7 @@ public class Constants {
     public static final int SCORE_Y = 450;
     public static final int PLAYER_SPEED = 200;
     public static final int DROP_TIME_PRESENTS = 1000000000;
-    public static final int DROP_TIME_SOCKS = 1000000000;
+    public static final int DROP_TIME_SOCKS = 1500000000;
     public static final int PRESENT_SPAWN_X = 736;
     public static final int PRESENT_SPAWN_Y = 480;
     public static final int PRESENT_WIDTH = 64;

@@ -83,5 +83,6 @@ public class InstructionsScreen implements Screen {
     @Override
     public void dispose() {
 
+        backgroundImage.dispose();
     }
 }

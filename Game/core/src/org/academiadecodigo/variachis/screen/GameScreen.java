@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
         backgroundImage = new Texture("background.jpg");
         backgroundSprite = new Sprite(backgroundImage);
         catcher = new Texture(Gdx.files.internal("freddy.png"));
-        sock = new Texture(Gdx.files.internal("sock.png"));
+        sock = new Texture(Gdx.files.internal("poop.png"));
         present = new Texture(Gdx.files.internal("present.png"));
         baby = new Texture(Gdx.files.internal("baby.png"));
         presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
@@ -82,8 +82,11 @@ public class GameScreen implements Screen {
 
 
         loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
+
         // start the playback of the background music immediately
         loop.setLooping(true);
+
+
         loop.play();
 
         rCatcher = new Rectangle();
@@ -106,8 +109,8 @@ public class GameScreen implements Screen {
 
         shapeRenderer = new ShapeRenderer();
 
-        gameOverScreen = new GameOverScreen(alpha, this);
-        gameWinScreen = new GameWinScreen(alpha, this);
+        gameOverScreen = new GameOverScreen(alpha);
+        gameWinScreen = new GameWinScreen(alpha);
 
         spawnPresents();
         spawnSocks();
@@ -183,11 +186,13 @@ public class GameScreen implements Screen {
                 iter.remove();
             }
 
-            if (score == 5) {
+            if (score == 20) {
+                loop.stop();
                 alpha.setScreen(gameWinScreen);
             }
 
             if (score == -1) {
+                loop.stop();
                 alpha.setScreen(gameOverScreen);
             }
         }
@@ -300,7 +305,4 @@ public class GameScreen implements Screen {
 
     }
 
-    public int getScore() {
-        return score;
-    }
 }

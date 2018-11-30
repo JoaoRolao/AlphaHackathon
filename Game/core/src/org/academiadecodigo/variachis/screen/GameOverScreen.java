@@ -19,19 +19,18 @@ public class GameOverScreen implements Screen {
     private final Alpha alpha;
     private SpriteBatch batch;
     private BitmapFont font;
-    private int score;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
     private Sound cryingBaby;
 
     private OrthographicCamera camera;
 
-    public GameOverScreen(Alpha game, GameScreen gameScreen) {
+    public GameOverScreen(Alpha game) {
 
         this.alpha = game;
         this.batch = game.batch;
         this.font = game.font;
-        this.score = gameScreen.getScore();
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -50,21 +49,22 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
 
         Gdx.gl.glClearColor(Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue(), Color.WHITE.getAlpha());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);camera.update();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        camera.update();
 
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         cryingBaby.play();
         backgroundSprite.draw(batch);
-        font.draw(batch, "Score: " + score, 100, 100);
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q))
             Gdx.app.exit();
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            cryingBaby.stop();
             alpha.setScreen(new MainMenuScreen(alpha));
         }
     }
@@ -92,6 +92,9 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void dispose() {
+
+        cryingBaby.dispose();
+        backgroundImage.dispose();
 
     }
 }
