@@ -34,7 +34,7 @@ public class SecondWinScreen implements Screen {
     @Override
     public void show() {
 
-        backgroundImage = new Texture("second-win.png");
+        backgroundImage = new Texture("second2win.png");
         backgroundSprite = new Sprite(backgroundImage);
 
     }

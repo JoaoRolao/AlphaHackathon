@@ -51,6 +51,7 @@ public class SecondStageScreen implements Screen {
     private Alpha alpha;
     private GameOverScreen gameOverScreen;
     private SecondWinScreen secondWinScreen;
+    private BitmapFont fontPopUp;
 
 
     public SecondStageScreen(Alpha alpha) {
@@ -64,6 +65,7 @@ public class SecondStageScreen implements Screen {
         beer = new Texture(Gdx.files.internal("beer1.png"));
         fangirl = new Texture(Gdx.files.internal("fangirl1.png"));
         baby = new Texture(Gdx.files.internal("baby.png"));
+        fontPopUp = new BitmapFont();
 
 
 
@@ -76,6 +78,7 @@ public class SecondStageScreen implements Screen {
         score = 3;
         yourScoreName = "Lives : 3";
         font = new BitmapFont();
+        Sounds.secondStage.setVolume(50);
         Sounds.secondStage.play();
 
 
@@ -196,6 +199,17 @@ public class SecondStageScreen implements Screen {
                 iter.remove();
             }
         }
+
+        String popUp = "YOU HAVE 30 SECONDS";
+
+        if (currentTime < -28) {
+            batch.begin();
+            fontPopUp.setColor(Color.BLACK);
+            fontPopUp.getData().setScale(3);
+            fontPopUp.draw(batch, popUp, 150, 240);
+            batch.end();
+        }
+
 
 
     }

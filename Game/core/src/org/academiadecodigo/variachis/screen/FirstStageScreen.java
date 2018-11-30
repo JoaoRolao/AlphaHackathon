@@ -43,6 +43,7 @@ public class FirstStageScreen implements Screen {
     private Array<Rectangle> presents;
     private String yourScoreName;
     private BitmapFont font;
+    private BitmapFont fontPopUp;
     private int score;
     private ShapeRenderer shapeRenderer;
     private float timeSeconds = 0f;
@@ -57,6 +58,8 @@ public class FirstStageScreen implements Screen {
         this.alpha = alpha;
         this.batch = alpha.batch;
         this.font = alpha.font;
+
+        fontPopUp = new BitmapFont();
 
         backgroundImage = new Texture("background.jpg");
         backgroundSprite = new Sprite(backgroundImage);
@@ -112,9 +115,15 @@ public class FirstStageScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        String popUp = "YOU HAVE 30 SECONDS";
+
+
+
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+
         batch.setProjectionMatrix(camera.combined);
         backgroundSprite.draw(batch);
         font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -203,6 +212,15 @@ public class FirstStageScreen implements Screen {
                 iter.remove();
             }
         }
+
+        if (currentTime < -28) {
+            batch.begin();
+            fontPopUp.setColor(Color.BLACK);
+            fontPopUp.getData().setScale(3);
+            fontPopUp.draw(batch, popUp, 150, 240);
+            batch.end();
+        }
+
 
 
     }

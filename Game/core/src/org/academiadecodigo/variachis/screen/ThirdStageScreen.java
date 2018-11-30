@@ -45,6 +45,7 @@ public class ThirdStageScreen implements Screen {
     private GameOverScreen gameOverScreen;
     private WinScreen winScreen;
     private boolean isJumping;
+    private BitmapFont fontPopUp;
 
 
     public ThirdStageScreen(Alpha alpha) {
@@ -56,8 +57,7 @@ public class ThirdStageScreen implements Screen {
         backgroundSprite = new Sprite(backgroundImage);
         catcher = new Texture(Gdx.files.internal("freddy.png"));
         sock = new Texture(Gdx.files.internal("barrel.png"));
-
-
+        fontPopUp = new BitmapFont();
 
 
     }
@@ -173,6 +173,16 @@ public class ThirdStageScreen implements Screen {
                 yourScoreName = "Lives: " + score;
                 iter.remove();
             }
+        }
+
+        String popUp = "YOU HAVE 30 SECONDS";
+
+        if (currentTime < -28) {
+            batch.begin();
+            fontPopUp.setColor(Color.BLACK);
+            fontPopUp.getData().setScale(3);
+            fontPopUp.draw(batch, popUp, 150, 240);
+            batch.end();
         }
 
 
