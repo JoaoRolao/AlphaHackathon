@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.variachis.Alpha;
 import org.academiadecodigo.variachis.Constants;
+import org.academiadecodigo.variachis.Sounds;
 
 import java.util.Iterator;
 
@@ -102,6 +103,8 @@ public class ThirdStageScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -134,20 +137,20 @@ public class ThirdStageScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && !isJumping) {
             isJumping = true;
 
-            while (isJumping){
+            while (isJumping) {
 
                 rCatcher.y += Constants.RUNNER_FALLING_SPEED * Gdx.graphics.getDeltaTime();
 
 
-                if (rCatcher.y >= 200){
+                if (rCatcher.y >= 200) {
                     isJumping = false;
                 }
 
-            //rCatcher.y = 250;
-        }
+                //rCatcher.y = 250;
+            }
 
         }
-        rCatcher.y -= Constants.RUNNER_FALLING_SPEED* Gdx.graphics.getDeltaTime();
+        rCatcher.y -= Constants.RUNNER_FALLING_SPEED * Gdx.graphics.getDeltaTime();
 
 
         if (rCatcher.y < 0 + 64) {
@@ -161,16 +164,17 @@ public class ThirdStageScreen implements Screen {
         }
 
 
-        if (TimeUtils.nanoTime() - lastDropTime1 > Constants.RUNNER_TIME_SPAWN) spawnSocks();
+        if (TimeUtils.nanoTime() - lastDropTime1 > randomBarrelGenerator()) spawnSocks();
 
         for (Iterator<Rectangle> iter = socks.iterator(); iter.hasNext(); ) {
             Rectangle rSocks = iter.next();
-            rSocks.x -= 200 * Gdx.graphics.getDeltaTime();
+            rSocks.x -= 250 * Gdx.graphics.getDeltaTime();
             if (rSocks.x + 32 < 0) iter.remove();
 
             if (rSocks.overlaps(rCatcher)) {
                 score--;
                 yourScoreName = "Lives: " + score;
+                Sounds.barrel.play();
                 iter.remove();
             }
         }
@@ -258,6 +262,21 @@ public class ThirdStageScreen implements Screen {
         sock.height = 32;
         socks.add(sock);
         lastDropTime1 = TimeUtils.nanoTime();
+
+    }
+
+    public int randomBarrelGenerator() {
+        int value = (int) Math.random() * 3;
+
+        switch (value) {
+            case 1:
+                return 1500000000;
+            case 2:
+                return 1450000000;
+            case 0:
+                return 1400000000;
+        }
+        return value * 1000000000;
 
     }
 

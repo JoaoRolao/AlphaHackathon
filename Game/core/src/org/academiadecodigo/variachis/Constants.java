@@ -41,7 +41,7 @@ public class Constants {
     public static final int RUNNER_OBJECT_WIDTH = 64;
     public static final int RUNNER_OBJECT_HEIGHT = 64;
     public static final int RUNNER_TIME_SPAWN = 1990000000;
-    public static final int RUNNER_FALLING_SPEED = 100;
+    public static final int RUNNER_FALLING_SPEED = 200;
 
 
 

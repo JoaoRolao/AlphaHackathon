@@ -28,7 +28,6 @@ public class SecondWinScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
-
     }
 
     @Override

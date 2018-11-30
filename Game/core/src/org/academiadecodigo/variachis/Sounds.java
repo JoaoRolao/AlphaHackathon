@@ -13,4 +13,6 @@ public class Sounds {
     public static final Sound fanGirlMusic = Gdx.audio.newSound(Gdx.files.internal("groupieSound.wav"));
     public static final Sound beerMusic = Gdx.audio.newSound(Gdx.files.internal("beerSound.wav"));
     public static final Music secondStage = Gdx.audio.newMusic(Gdx.files.internal("darude.mp3"));
+    public static final Music barrel = Gdx.audio.newMusic(Gdx.files.internal("barrelColision.mp3"));
+    //public static final Music stage3 = Gdx.audio.newMusic(Gdx.files.internal("MusicLVL3.mp3"));
 }

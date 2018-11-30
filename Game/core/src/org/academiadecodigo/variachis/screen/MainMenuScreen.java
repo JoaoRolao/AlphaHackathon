@@ -64,7 +64,9 @@ public class MainMenuScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             Sounds.underPressure.stop();
-            game.setScreen(new FirstStageInstructions(game));
+            // game.setScreen(new FirstStageInstructions(game));
+
+            game.setScreen(new ThirdStageScreen(game));
             dispose();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
