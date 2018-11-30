@@ -34,4 +34,14 @@ public class Constants {
     public static final int DROP_TIME_PRESENTS_TWO = 770000000;
     public static final int DROP_TIME_SOCKS_TWO = 820000000;
 
+    public static final int RUNNER_SPAWN_X = 50;
+    public static final int RUNNER_SPAWN_Y = 50;
+    public static final int RUNNER_OBJECT_X = 800;
+    public static final int RUNNER_OBJECT_Y = 50;
+    public static final int RUNNER_OBJECT_WIDTH = 64;
+    public static final int RUNNER_OBJECT_HEIGHT = 64;
+    public static final int RUNNER_TIME_SPAWN = 1000000000;
+
+
+
 }

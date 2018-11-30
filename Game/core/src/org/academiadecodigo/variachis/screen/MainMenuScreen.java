@@ -51,7 +51,8 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
 
         Gdx.gl.glClearColor(Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue(), Color.WHITE.getAlpha());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);camera.update();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
 
         underPressure.setLooping(true);
         underPressure.play();
@@ -67,12 +68,12 @@ public class MainMenuScreen implements Screen {
             game.setScreen(new InstructionsScreen(game));
             dispose();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)){
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             underPressure.stop();
             game.setScreen(new WaitingScreen(game));
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)){
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             Gdx.app.exit();
         }
 

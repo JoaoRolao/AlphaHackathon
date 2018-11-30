@@ -38,7 +38,7 @@ public class GameWinScreen implements Screen {
 
     @Override
     public void show() {
-        backgroundImage = new Texture("gamewin.png");
+        backgroundImage = new Texture("instructions2.png");
         backgroundSprite = new Sprite(backgroundImage);
 
     }
@@ -58,7 +58,7 @@ public class GameWinScreen implements Screen {
             dispose();
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             alpha.setScreen(stageTwo);
             dispose();
 

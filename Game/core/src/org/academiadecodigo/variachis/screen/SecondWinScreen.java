@@ -56,12 +56,6 @@ public class SecondWinScreen implements Screen {
             alpha.setScreen(alpha.getMainMenuScreen());
             dispose();
         }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            alpha.setScreen(stageTwo);
-            dispose();
-
-        }
     }
 
     @Override
