@@ -78,7 +78,7 @@ public class SecondStageScreen implements Screen {
         score = 3;
         yourScoreName = "Lives : 3";
         font = new BitmapFont();
-        Sounds.secondStage.setVolume(50);
+        Sounds.secondStage.setVolume(80);
         Sounds.secondStage.play();
 
 

@@ -48,7 +48,7 @@ public class SecondWinScreen implements Screen {
         batch.end();
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             alpha.setScreen(new ThirdStageScreen(alpha));
             dispose();
         }

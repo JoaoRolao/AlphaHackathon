@@ -37,7 +37,7 @@ public class FirstStageInstructions implements Screen {
     @Override
     public void show() {
 
-        backgroundImage = new Texture("fsInstructions.png");
+        backgroundImage = new Texture("fsInstructions1.png");
         backgroundSprite = new Sprite(backgroundImage);
 
     }

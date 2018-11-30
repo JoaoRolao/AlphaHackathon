@@ -39,7 +39,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
 
-        backgroundImage = new Texture("mainMenuScreen.png");
+        backgroundImage = new Texture("mainMenuScreen2.png");
         backgroundSprite = new Sprite(backgroundImage);
 
 
@@ -66,7 +66,7 @@ public class MainMenuScreen implements Screen {
             Sounds.underPressure.stop();
             // game.setScreen(new FirstStageInstructions(game));
 
-            game.setScreen(new ThirdStageScreen(game));
+            game.setScreen(new FirstStageInstructions(game));
             dispose();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {

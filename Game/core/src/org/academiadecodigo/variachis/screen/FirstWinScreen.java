@@ -34,7 +34,7 @@ public class FirstWinScreen implements Screen {
 
     @Override
     public void show() {
-        backgroundImage = new Texture("instructions2.png");
+        backgroundImage = new Texture("instructions22.png");
         backgroundSprite = new Sprite(backgroundImage);
 
     }

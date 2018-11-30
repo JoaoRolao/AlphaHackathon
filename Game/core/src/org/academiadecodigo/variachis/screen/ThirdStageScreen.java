@@ -70,6 +70,7 @@ public class ThirdStageScreen implements Screen {
         score = 3;
         yourScoreName = "Lives : 3";
         font = new BitmapFont();
+        Sounds.thirdStage.play();
 
 
         rCatcher = new Rectangle();
