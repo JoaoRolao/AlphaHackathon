@@ -9,18 +9,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
 
-public class SecondWinScreen implements Screen {
+public class FirstWinScreen implements Screen {
 
     private final Alpha alpha;
     private SpriteBatch batch;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
-
+    private SecondStageScreen secondStageScreen;
 
     private OrthographicCamera camera;
 
 
-    public SecondWinScreen(Alpha alpha) {
+    public FirstWinScreen(Alpha alpha) {
 
         this.alpha = alpha;
         this.batch = alpha.batch;
@@ -28,13 +28,13 @@ public class SecondWinScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
+        secondStageScreen = new SecondStageScreen(alpha);
 
     }
 
     @Override
     public void show() {
-
-        backgroundImage = new Texture("second-win.png");
+        backgroundImage = new Texture("instructions2.png");
         backgroundSprite = new Sprite(backgroundImage);
 
     }
@@ -49,9 +49,15 @@ public class SecondWinScreen implements Screen {
         batch.end();
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            alpha.setScreen(new ThirdStageScreen(alpha));
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            alpha.setScreen(alpha.getMainMenuScreen());
             dispose();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            alpha.setScreen(secondStageScreen);
+            dispose();
+
         }
     }
 
@@ -77,8 +83,6 @@ public class SecondWinScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundImage.dispose();
-
 
     }
 }

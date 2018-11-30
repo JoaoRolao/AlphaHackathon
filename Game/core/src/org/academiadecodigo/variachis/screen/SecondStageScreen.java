@@ -20,11 +20,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.variachis.Alpha;
 import org.academiadecodigo.variachis.Constants;
+import org.academiadecodigo.variachis.Sounds;
 
 import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameScreen implements Screen {
+public class SecondStageScreen implements Screen {
 
 
     private SpriteBatch batch;
@@ -33,17 +33,14 @@ public class GameScreen implements Screen {
     private Texture catcher;
     private Rectangle rCatcher;
     private Rectangle bCatcher;
-    private Texture present;
-    private Texture sock;
+    private Texture fangirl;
+    private Texture beer;
     private Texture baby;
-    private Music loop;
     private Long lastDropTime;
     private Long lastDropTime1;
     private OrthographicCamera camera;
-    private Array<Rectangle> socks;
-    private Array<Rectangle> presents;
-    private Sound presentSound;
-    private Sound sockSound;
+    private Array<Rectangle> beers;
+    private Array<Rectangle> fangirls;
     private String yourScoreName;
     private BitmapFont font;
     private int score;
@@ -53,39 +50,34 @@ public class GameScreen implements Screen {
     private boolean isOver = false;
     private Alpha alpha;
     private GameOverScreen gameOverScreen;
-    private GameWinScreen gameWinScreen;
+    private SecondWinScreen secondWinScreen;
 
 
-    public GameScreen(Alpha alpha) {
+    public SecondStageScreen(Alpha alpha) {
         this.alpha = alpha;
         this.batch = alpha.batch;
         this.font = alpha.font;
 
-        backgroundImage = new Texture("background.jpg");
+        backgroundImage = new Texture("stage-2-background2.jpeg");
         backgroundSprite = new Sprite(backgroundImage);
         catcher = new Texture(Gdx.files.internal("freddy.png"));
-        sock = new Texture(Gdx.files.internal("poop.png"));
-        present = new Texture(Gdx.files.internal("present.png"));
+        beer = new Texture(Gdx.files.internal("beer1.png"));
+        fangirl = new Texture(Gdx.files.internal("fangirl1.png"));
         baby = new Texture(Gdx.files.internal("baby.png"));
-        presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
-        sockSound = Gdx.audio.newSound(Gdx.files.internal("holy-shit.wav"));
-        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
+
+
+
     }
 
     @Override
     public void show() {
 
 
-        score = 0;
-        yourScoreName = "score: 0/20";
+        score = 3;
+        yourScoreName = "Lives : 3";
         font = new BitmapFont();
+        Sounds.secondStage.play();
 
-        // start the playback of the background music immediately
-
-        loop.setLooping(true);
-
-
-        loop.play();
 
         rCatcher = new Rectangle();
         rCatcher.x = Constants.CATCHER_X;
@@ -99,8 +91,8 @@ public class GameScreen implements Screen {
         bCatcher.width = Constants.BABY_WIDTH;
         bCatcher.height = Constants.BABY_HEIGHT;
 
-        socks = new Array<Rectangle>();
-        presents = new Array<Rectangle>();
+        beers = new Array<Rectangle>();
+        fangirls = new Array<Rectangle>();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -108,7 +100,7 @@ public class GameScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
 
         gameOverScreen = new GameOverScreen(alpha);
-        gameWinScreen = new GameWinScreen(alpha);
+        secondWinScreen = new SecondWinScreen(alpha);
 
         spawnPresents();
         spawnSocks();
@@ -131,8 +123,7 @@ public class GameScreen implements Screen {
         batch.end();
 
         if (isOver) {
-            loop.stop();
-            alpha.setScreen(gameOverScreen);
+            alpha.setScreen(secondWinScreen);
         }
 
         timer();
@@ -141,17 +132,18 @@ public class GameScreen implements Screen {
 
         batch.draw(baby, bCatcher.x, bCatcher.y);
 
-        for (Rectangle presentDrop : presents) {
-            batch.draw(present, presentDrop.x, presentDrop.y);
+        for (Rectangle presentDrop : fangirls) {
+            batch.draw(fangirl, presentDrop.x, presentDrop.y);
 
         }
 
-        for (Rectangle sockDrop : socks) {
-            batch.draw(sock, sockDrop.x, sockDrop.y);
+        for (Rectangle sockDrop : beers) {
+            batch.draw(beer, sockDrop.x, sockDrop.y);
 
         }
 
         batch.end();
+
 
         camera.update();
 
@@ -169,45 +161,38 @@ public class GameScreen implements Screen {
         if (rCatcher.x < 0) rCatcher.x = 0;
         if (rCatcher.x > 800 - 64) rCatcher.x = 800 - 64;
 
-        if (TimeUtils.nanoTime() - lastDropTime > Constants.DROP_TIME_PRESENTS) spawnPresents();
+        if (TimeUtils.nanoTime() - lastDropTime > Constants.DROP_TIME_PRESENTS_TWO) spawnPresents();
 
-        for (Iterator<Rectangle> iter = presents.iterator(); iter.hasNext(); ) {
+        for (Iterator<Rectangle> iter = fangirls.iterator(); iter.hasNext(); ) {
             Rectangle rPresents = iter.next();
             rPresents.y -= 200 * Gdx.graphics.getDeltaTime();
             if (rPresents.y + 64 < 0) iter.remove();
 
             if (rPresents.overlaps(rCatcher)) {
-                score++;
-                yourScoreName = "score: " + score + "/20";
-                presentSound.setVolume(1, -50);
-                presentSound.play();
+                score--;
+                yourScoreName = "score: " + score;
+                Sounds.fanGirlMusic.play();
                 iter.remove();
             }
 
-            if (score == 20) {
-                loop.stop();
-                alpha.setScreen(gameWinScreen);
-            }
-
-            if (score == -1) {
-                loop.stop();
+            if (score == 0) {
                 alpha.setScreen(gameOverScreen);
             }
+
         }
 
 
-        if (TimeUtils.nanoTime() - lastDropTime1 > Constants.DROP_TIME_SOCKS) spawnSocks();
+        if (TimeUtils.nanoTime() - lastDropTime1 > Constants.DROP_TIME_SOCKS_TWO) spawnSocks();
 
-        for (Iterator<Rectangle> iter = socks.iterator(); iter.hasNext(); ) {
+        for (Iterator<Rectangle> iter = beers.iterator(); iter.hasNext(); ) {
             Rectangle rSocks = iter.next();
             rSocks.y -= 200 * Gdx.graphics.getDeltaTime();
             if (rSocks.y + 64 < 0) iter.remove();
 
             if (rSocks.overlaps(rCatcher)) {
                 score--;
-                yourScoreName = "score: " + score + "/20";
-                sockSound.setVolume(1, 50);
-                sockSound.play();
+                yourScoreName = "Lives: " + score;
+                Sounds.beerMusic.play();
                 iter.remove();
             }
         }
@@ -240,12 +225,9 @@ public class GameScreen implements Screen {
         batch.dispose();
         catcher.dispose();
         backgroundImage.dispose();
-        present.dispose();
+        fangirl.dispose();
         baby.dispose();
-        loop.dispose();
-        sock.dispose();
-        presentSound.dispose();
-        sockSound.dispose();
+        beer.dispose();
 
     }
 
@@ -271,10 +253,9 @@ public class GameScreen implements Screen {
             shapeRenderer.setColor(Color.RED);
         }
 
+
         if (barWidth >= 0) {
             isOver = true;
-
-
         }
 
 
@@ -289,7 +270,7 @@ public class GameScreen implements Screen {
         present.y = Constants.PRESENT_SPAWN_Y;
         present.width = Constants.PRESENT_WIDTH;
         present.height = Constants.PRESENT_HEIGHT;
-        presents.add(present);
+        fangirls.add(present);
         lastDropTime = TimeUtils.nanoTime();
 
     }
@@ -301,7 +282,7 @@ public class GameScreen implements Screen {
         sock.y = Constants.SOCKS_SPAWN_Y;
         sock.width = Constants.SOCKS_WIDTH;
         sock.height = Constants.SOCKS_HEIGHT;
-        socks.add(sock);
+        beers.add(sock);
         lastDropTime1 = TimeUtils.nanoTime();
 
     }

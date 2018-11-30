@@ -3,8 +3,6 @@ package org.academiadecodigo.variachis.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -23,23 +22,18 @@ import org.academiadecodigo.variachis.Constants;
 
 import java.util.Iterator;
 
-public class StageTwo implements Screen {
-
-
+public class ThirdStageScreen implements Screen {
     private SpriteBatch batch;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
     private Texture catcher;
     private Rectangle rCatcher;
     private Rectangle bCatcher;
-    private Texture fangirl;
-    private Texture beer;
-    private Texture baby;
-    private Long lastDropTime;
+    private Texture sock;
     private Long lastDropTime1;
     private OrthographicCamera camera;
-    private Array<Rectangle> beers;
-    private Array<Rectangle> fangirls;
+    private Array<Rectangle> socks;
+    private Array<Rectangle> presents;
     private String yourScoreName;
     private BitmapFont font;
     private int score;
@@ -49,26 +43,21 @@ public class StageTwo implements Screen {
     private boolean isOver = false;
     private Alpha alpha;
     private GameOverScreen gameOverScreen;
-    private SecondWinScreen secondWinScreen;
-    private Sound fanGirlMusic;
-    private Sound beerMusic;
-    private Music backgroundMusic;
+    private WinScreen winScreen;
+    private boolean isJumping;
 
 
-    public StageTwo(Alpha alpha) {
+    public ThirdStageScreen(Alpha alpha) {
         this.alpha = alpha;
         this.batch = alpha.batch;
         this.font = alpha.font;
 
-        backgroundImage = new Texture("stage-2-background2.jpeg");
+        backgroundImage = new Texture("level3.png");
         backgroundSprite = new Sprite(backgroundImage);
         catcher = new Texture(Gdx.files.internal("freddy.png"));
-        beer = new Texture(Gdx.files.internal("beer1.png"));
-        fangirl = new Texture(Gdx.files.internal("fangirl1.png"));
-        baby = new Texture(Gdx.files.internal("baby.png"));
-        fanGirlMusic = Gdx.audio.newSound(Gdx.files.internal("groupieSound.wav"));
-        beerMusic = Gdx.audio.newSound(Gdx.files.internal("beerSound.wav"));
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("darude.mp3"));
+        sock = new Texture(Gdx.files.internal("barrel.png"));
+
+
 
 
     }
@@ -80,12 +69,11 @@ public class StageTwo implements Screen {
         score = 3;
         yourScoreName = "Lives : 3";
         font = new BitmapFont();
-        //backgroundMusic.play();
 
 
         rCatcher = new Rectangle();
-        rCatcher.x = Constants.CATCHER_X;
-        rCatcher.y = Constants.CATCHER_Y;
+        rCatcher.x = Constants.RUNNER_SPAWN_X;
+        rCatcher.y = Constants.RUNNER_SPAWN_Y;
         rCatcher.width = Constants.CATCHER_WIDTH;
         rCatcher.height = Constants.CATCHER_HEIGHT;
 
@@ -95,8 +83,8 @@ public class StageTwo implements Screen {
         bCatcher.width = Constants.BABY_WIDTH;
         bCatcher.height = Constants.BABY_HEIGHT;
 
-        beers = new Array<Rectangle>();
-        fangirls = new Array<Rectangle>();
+        socks = new Array<Rectangle>();
+        presents = new Array<Rectangle>();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -104,9 +92,8 @@ public class StageTwo implements Screen {
         shapeRenderer = new ShapeRenderer();
 
         gameOverScreen = new GameOverScreen(alpha);
-        secondWinScreen = new SecondWinScreen(alpha);
+        winScreen = new WinScreen(alpha);
 
-        spawnPresents();
         spawnSocks();
 
 
@@ -127,22 +114,15 @@ public class StageTwo implements Screen {
         batch.end();
 
         if (isOver) {
-            alpha.setScreen(secondWinScreen);
+            alpha.setScreen(winScreen);
         }
 
         timer();
 
         batch.begin();
 
-        batch.draw(baby, bCatcher.x, bCatcher.y);
-
-        for (Rectangle presentDrop : fangirls) {
-            batch.draw(fangirl, presentDrop.x, presentDrop.y);
-
-        }
-
-        for (Rectangle sockDrop : beers) {
-            batch.draw(beer, sockDrop.x, sockDrop.y);
+        for (Rectangle sockDrop : socks) {
+            batch.draw(sock, sockDrop.x, sockDrop.y);
 
         }
 
@@ -151,52 +131,46 @@ public class StageTwo implements Screen {
 
         camera.update();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) rCatcher.x -= Constants.PLAYER_SPEED * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            rCatcher.x += Constants.PLAYER_SPEED * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && !isJumping) {
+            isJumping = true;
 
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            rCatcher.x = touchPos.x - 64 / 2;
+            while (isJumping){
+
+                rCatcher.y += Constants.RUNNER_FALLING_SPEED * Gdx.graphics.getDeltaTime();
+
+
+                if (rCatcher.y >= 200){
+                    isJumping = false;
+                }
+
+            //rCatcher.y = 250;
         }
 
-        if (rCatcher.x < 0) rCatcher.x = 0;
-        if (rCatcher.x > 800 - 64) rCatcher.x = 800 - 64;
+        }
+        rCatcher.y -= Constants.RUNNER_FALLING_SPEED* Gdx.graphics.getDeltaTime();
 
-        if (TimeUtils.nanoTime() - lastDropTime > Constants.DROP_TIME_PRESENTS_TWO) spawnPresents();
 
-        for (Iterator<Rectangle> iter = fangirls.iterator(); iter.hasNext(); ) {
-            Rectangle rPresents = iter.next();
-            rPresents.y -= 200 * Gdx.graphics.getDeltaTime();
-            if (rPresents.y + 64 < 0) iter.remove();
-
-            if (rPresents.overlaps(rCatcher)) {
-                score--;
-                yourScoreName = "score: " + score;
-                fanGirlMusic.play();
-                iter.remove();
-            }
-
-            if (score == 0) {
-                alpha.setScreen(gameOverScreen);
-            }
+        if (rCatcher.y < 0 + 64) {
+            rCatcher.y = 64;
 
         }
 
 
-        if (TimeUtils.nanoTime() - lastDropTime1 > Constants.DROP_TIME_SOCKS_TWO) spawnSocks();
+        if (score == 0) {
+            alpha.setScreen(gameOverScreen);
+        }
 
-        for (Iterator<Rectangle> iter = beers.iterator(); iter.hasNext(); ) {
+
+        if (TimeUtils.nanoTime() - lastDropTime1 > Constants.RUNNER_TIME_SPAWN) spawnSocks();
+
+        for (Iterator<Rectangle> iter = socks.iterator(); iter.hasNext(); ) {
             Rectangle rSocks = iter.next();
-            rSocks.y -= 200 * Gdx.graphics.getDeltaTime();
-            if (rSocks.y + 64 < 0) iter.remove();
+            rSocks.x -= 200 * Gdx.graphics.getDeltaTime();
+            if (rSocks.x + 32 < 0) iter.remove();
 
             if (rSocks.overlaps(rCatcher)) {
                 score--;
                 yourScoreName = "Lives: " + score;
-                beerMusic.play();
                 iter.remove();
             }
         }
@@ -228,10 +202,7 @@ public class StageTwo implements Screen {
     public void dispose() {
         batch.dispose();
         catcher.dispose();
-        backgroundImage.dispose();
-        fangirl.dispose();
-        baby.dispose();
-        beer.dispose();
+        sock.dispose();
 
     }
 
@@ -267,26 +238,15 @@ public class StageTwo implements Screen {
 
     }
 
-    private void spawnPresents() {
-
-        Rectangle present = new Rectangle();
-        present.x = MathUtils.random(0, Constants.PRESENT_SPAWN_X);
-        present.y = Constants.PRESENT_SPAWN_Y;
-        present.width = Constants.PRESENT_WIDTH;
-        present.height = Constants.PRESENT_HEIGHT;
-        fangirls.add(present);
-        lastDropTime = TimeUtils.nanoTime();
-
-    }
 
     private void spawnSocks() {
 
         Rectangle sock = new Rectangle();
-        sock.x = MathUtils.random(0, Constants.SOCKS_SPAWN_X);
-        sock.y = Constants.SOCKS_SPAWN_Y;
-        sock.width = Constants.SOCKS_WIDTH;
-        sock.height = Constants.SOCKS_HEIGHT;
-        beers.add(sock);
+        sock.y = Constants.RUNNER_OBJECT_Y + 32;
+        sock.x = Constants.RUNNER_OBJECT_X;
+        sock.width = 32;
+        sock.height = 32;
+        socks.add(sock);
         lastDropTime1 = TimeUtils.nanoTime();
 
     }

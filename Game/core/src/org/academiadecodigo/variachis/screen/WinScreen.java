@@ -3,28 +3,24 @@ package org.academiadecodigo.variachis.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
 
-import java.awt.*;
-
-public class GameWinScreen implements Screen {
+public class WinScreen implements Screen {
 
     private final Alpha alpha;
     private SpriteBatch batch;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
-    private StageTwo stageTwo;
+
 
     private OrthographicCamera camera;
 
 
-    public GameWinScreen(Alpha alpha) {
+    public WinScreen(Alpha alpha) {
 
         this.alpha = alpha;
         this.batch = alpha.batch;
@@ -32,13 +28,13 @@ public class GameWinScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
-        stageTwo = new StageTwo(alpha);
 
     }
 
     @Override
     public void show() {
-        backgroundImage = new Texture("instructions2.png");
+
+        backgroundImage = new Texture("gamewin.png");
         backgroundSprite = new Sprite(backgroundImage);
 
     }
@@ -53,15 +49,9 @@ public class GameWinScreen implements Screen {
         batch.end();
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            alpha.setScreen(alpha.getMainMenuScreen());
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            alpha.setScreen(new MainMenuScreen(alpha));
             dispose();
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            alpha.setScreen(stageTwo);
-            dispose();
-
         }
     }
 
@@ -87,6 +77,8 @@ public class GameWinScreen implements Screen {
 
     @Override
     public void dispose() {
+        backgroundImage.dispose();
+
 
     }
 }

@@ -14,7 +14,7 @@ import org.academiadecodigo.variachis.Constants;
 
 import java.awt.*;
 
-public class InstructionsScreen implements Screen {
+public class FirstStageInstructions implements Screen {
 
     private final Alpha game;
     private SpriteBatch batch;
@@ -24,7 +24,7 @@ public class InstructionsScreen implements Screen {
 
     private OrthographicCamera camera;
 
-    public InstructionsScreen(Alpha game) {
+    public FirstStageInstructions(Alpha game) {
 
         this.game = game;
         this.batch = game.batch;
@@ -54,7 +54,7 @@ public class InstructionsScreen implements Screen {
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new FirstStageScreen(game));
             dispose();
         }
 

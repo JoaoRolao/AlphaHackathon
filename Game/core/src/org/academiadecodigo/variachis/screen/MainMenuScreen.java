@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
 import org.academiadecodigo.variachis.Constants;
+import org.academiadecodigo.variachis.Sounds;
 
 import java.awt.*;
 
@@ -20,7 +22,6 @@ public class MainMenuScreen implements Screen {
     private SpriteBatch batch;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
-    private Music underPressure;
     private OrthographicCamera camera;
 
     public MainMenuScreen(Alpha game) {
@@ -51,9 +52,9 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
 
-        underPressure = Gdx.audio.newMusic(Gdx.files.internal("under-pressure.mp3"));
-        underPressure.setLooping(true);
-        underPressure.play();
+
+        Sounds.underPressure.setLooping(true);
+        Sounds.underPressure.play();
 
 
         batch.begin();
@@ -62,27 +63,27 @@ public class MainMenuScreen implements Screen {
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            underPressure.stop();
-            game.setScreen(new InstructionsScreen(game));
+            Sounds.underPressure.stop();
+            game.setScreen(new FirstStageInstructions(game));
             dispose();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-            underPressure.stop();
+            Sounds.underPressure.stop();
             game.setScreen(new WaitingScreen(game, 15));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-            underPressure.stop();
+            Sounds.underPressure.stop();
             game.setScreen(new WaitingScreen(game, 900));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
-            underPressure.stop();
+            Sounds.underPressure.stop();
             game.setScreen(new WaitingScreen(game, 1800));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
-            underPressure.stop();
+            Sounds.underPressure.stop();
             game.setScreen(new WaitingScreen(game, 3600));
         }
 
@@ -115,7 +116,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         backgroundImage.dispose();
-        underPressure.dispose();
+        Sounds.underPressure.dispose();
 
 
     }
