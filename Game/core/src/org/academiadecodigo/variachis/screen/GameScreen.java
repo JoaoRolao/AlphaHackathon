@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
         backgroundImage = new Texture("background.jpg");
         backgroundSprite = new Sprite(backgroundImage);
         catcher = new Texture(Gdx.files.internal("freddy.png"));
-        sock = new Texture(Gdx.files.internal("sock.png"));
+        sock = new Texture(Gdx.files.internal("poop.png"));
         present = new Texture(Gdx.files.internal("present.png"));
         baby = new Texture(Gdx.files.internal("baby.png"));
         presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
@@ -85,6 +85,8 @@ public class GameScreen implements Screen {
         loop2 = Gdx.audio.newMusic(Gdx.files.internal("baby_crying.mp3"));
         // start the playback of the background music immediately
         loop.setLooping(true);
+
+
         loop.play();
 
         rCatcher = new Rectangle();
@@ -263,14 +265,14 @@ public class GameScreen implements Screen {
 
         }
 
-/*
-        if (barWidth >= 55) {
+
+        if (barWidth >= 25) {
            loop.stop();
            loop2.setLooping(true);
            loop2.play();
 
         }
-*/
+
         shapeRenderer.end();
 
     }
