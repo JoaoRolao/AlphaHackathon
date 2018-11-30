@@ -83,6 +83,8 @@ public class GameScreen implements Screen {
         // start the playback of the background music immediately
 
         loop.setLooping(true);
+
+
         loop.play();
 
         rCatcher = new Rectangle();
