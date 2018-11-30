@@ -18,7 +18,7 @@ public class Constants {
     public static final int BABY_HEIGHT = 64;
     public static final int BABY_WIDTH = 64;
     public static final int SCORE_X = 20;
-    public static final int SCORE_Y = 450;
+    public static final int SCORE_Y = 440;
     public static final int PLAYER_SPEED = 200;
     public static final int DROP_TIME_PRESENTS = 1000000000;
     public static final int DROP_TIME_SOCKS = 1500000000;
@@ -30,5 +30,8 @@ public class Constants {
     public static final int SOCKS_SPAWN_Y = 480;
     public static final int SOCKS_WIDTH = 64;
     public static final int SOCKS_HEIGHT = 64;
+    public static final int WAITING_TIME = 10;
+    public static final int DROP_TIME_PRESENTS_TWO = 770000000;
+    public static final int DROP_TIME_SOCKS_TWO = 820000000;
 
 }

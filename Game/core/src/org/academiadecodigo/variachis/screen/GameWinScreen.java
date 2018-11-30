@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
 
@@ -15,7 +17,9 @@ public class GameWinScreen implements Screen {
 
     private final Alpha alpha;
     private SpriteBatch batch;
-    private BitmapFont font;
+    private Texture backgroundImage;
+    private Sprite backgroundSprite;
+    private StageTwo stageTwo;
 
     private OrthographicCamera camera;
 
@@ -24,39 +28,41 @@ public class GameWinScreen implements Screen {
 
         this.alpha = alpha;
         this.batch = alpha.batch;
-        this.font = alpha.font;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        stageTwo = new StageTwo(alpha);
 
     }
 
     @Override
     public void show() {
+        backgroundImage = new Texture("gamewin.png");
+        backgroundSprite = new Sprite(backgroundImage);
 
     }
 
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue(), Color.WHITE.getAlpha());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);camera.update();
-
-
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font.draw(batch, "You Win!!!!", 100, 150);
+        backgroundSprite.draw(batch);
         batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q))
-            Gdx.app.exit();
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             alpha.setScreen(alpha.getMainMenuScreen());
             dispose();
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            alpha.setScreen(stageTwo);
+            dispose();
+
+        }
     }
 
     @Override

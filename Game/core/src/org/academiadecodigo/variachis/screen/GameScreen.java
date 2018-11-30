@@ -60,6 +60,16 @@ public class GameScreen implements Screen {
         this.alpha = alpha;
         this.batch = alpha.batch;
         this.font = alpha.font;
+
+        backgroundImage = new Texture("background.jpg");
+        backgroundSprite = new Sprite(backgroundImage);
+        catcher = new Texture(Gdx.files.internal("freddy.png"));
+        sock = new Texture(Gdx.files.internal("poop.png"));
+        present = new Texture(Gdx.files.internal("present.png"));
+        baby = new Texture(Gdx.files.internal("baby.png"));
+        presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
+        sockSound = Gdx.audio.newSound(Gdx.files.internal("holy-shit.wav"));
+        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
     }
 
     @Override
@@ -70,23 +80,9 @@ public class GameScreen implements Screen {
         yourScoreName = "score: 0/20";
         font = new BitmapFont();
 
-        //path to the background image
-        backgroundImage = new Texture("background.jpg");
-        backgroundSprite = new Sprite(backgroundImage);
-        catcher = new Texture(Gdx.files.internal("freddy.png"));
-        sock = new Texture(Gdx.files.internal("poop.png"));
-        present = new Texture(Gdx.files.internal("present.png"));
-        baby = new Texture(Gdx.files.internal("baby.png"));
-        presentSound = Gdx.audio.newSound(Gdx.files.internal("catchPresentSound.wav"));
-        sockSound = Gdx.audio.newSound(Gdx.files.internal("catchSockSound.wav"));
-
-
-        loop = Gdx.audio.newMusic(Gdx.files.internal("loop.mp3"));
-
         // start the playback of the background music immediately
+
         loop.setLooping(true);
-
-
         loop.play();
 
         rCatcher = new Rectangle();
@@ -133,6 +129,7 @@ public class GameScreen implements Screen {
         batch.end();
 
         if (isOver) {
+            loop.stop();
             alpha.setScreen(gameOverScreen);
         }
 
@@ -153,7 +150,6 @@ public class GameScreen implements Screen {
         }
 
         batch.end();
-
 
         camera.update();
 
@@ -208,6 +204,7 @@ public class GameScreen implements Screen {
             if (rSocks.overlaps(rCatcher)) {
                 score--;
                 yourScoreName = "score: " + score + "/20";
+                sockSound.setVolume(1,50);
                 sockSound.play();
                 iter.remove();
             }
@@ -245,6 +242,8 @@ public class GameScreen implements Screen {
         baby.dispose();
         loop.dispose();
         sock.dispose();
+        presentSound.dispose();
+        sockSound.dispose();
 
     }
 

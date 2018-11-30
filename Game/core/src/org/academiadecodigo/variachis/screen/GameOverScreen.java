@@ -3,6 +3,7 @@ package org.academiadecodigo.variachis.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,10 +19,9 @@ public class GameOverScreen implements Screen {
 
     private final Alpha alpha;
     private SpriteBatch batch;
-    private BitmapFont font;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
-    private Sound cryingBaby;
+    private Music cryingBaby = Gdx.audio.newMusic(Gdx.files.internal("babycrying.wav"));
 
     private OrthographicCamera camera;
 
@@ -29,7 +29,6 @@ public class GameOverScreen implements Screen {
 
         this.alpha = game;
         this.batch = game.batch;
-        this.font = game.font;
 
 
         camera = new OrthographicCamera();
@@ -41,7 +40,6 @@ public class GameOverScreen implements Screen {
 
         backgroundImage = new Texture("gameover.png");
         backgroundSprite = new Sprite(backgroundImage);
-        cryingBaby = Gdx.audio.newSound(Gdx.files.internal("babycrying.mp3"));
 
     }
 
@@ -55,8 +53,11 @@ public class GameOverScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
 
+        //cryingBaby.play();
+
+
         batch.begin();
-        cryingBaby.play();
+
         backgroundSprite.draw(batch);
         batch.end();
 
@@ -64,7 +65,7 @@ public class GameOverScreen implements Screen {
             Gdx.app.exit();
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            cryingBaby.stop();
+            //cryingBaby.stop();
             alpha.setScreen(new MainMenuScreen(alpha));
         }
     }

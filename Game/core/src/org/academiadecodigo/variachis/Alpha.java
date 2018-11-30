@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.variachis.screen.MainMenuScreen;
+import org.academiadecodigo.variachis.screen.WaitingScreen;
 
 import java.util.Iterator;
 
@@ -27,6 +28,7 @@ public class Alpha extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
     private MainMenuScreen mainMenuScreen;
+    private WaitingScreen waitingScreen;
 
 
     @Override
@@ -35,8 +37,9 @@ public class Alpha extends Game {
         font = new BitmapFont();
 
         mainMenuScreen = new MainMenuScreen(this);
+       // waitingScreen = new WaitingScreen(this);
         this.setScreen(mainMenuScreen);
-
+        //this.setScreen(waitingScreen);
 
     }
 
