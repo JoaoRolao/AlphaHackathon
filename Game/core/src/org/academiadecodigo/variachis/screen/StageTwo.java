@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.variachis.Alpha;
 import org.academiadecodigo.variachis.Constants;
+
 import java.util.Iterator;
 
 public class StageTwo implements Screen {
@@ -79,7 +80,7 @@ public class StageTwo implements Screen {
         score = 3;
         yourScoreName = "Lives : 3";
         font = new BitmapFont();
-        backgroundMusic.play();
+        //backgroundMusic.play();
 
 
         rCatcher = new Rectangle();
@@ -173,7 +174,7 @@ public class StageTwo implements Screen {
 
             if (rPresents.overlaps(rCatcher)) {
                 score--;
-                yourScoreName = "score: " + score ;
+                yourScoreName = "score: " + score;
                 fanGirlMusic.play();
                 iter.remove();
             }
@@ -260,8 +261,6 @@ public class StageTwo implements Screen {
         if (barWidth >= 0) {
             isOver = true;
         }
-
-
 
 
         shapeRenderer.end();

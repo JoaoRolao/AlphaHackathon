@@ -3,12 +3,9 @@ package org.academiadecodigo.variachis.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.variachis.Alpha;
@@ -21,7 +18,7 @@ public class GameOverScreen implements Screen {
     private SpriteBatch batch;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
-    private Music cryingBaby = Gdx.audio.newMusic(Gdx.files.internal("babycrying.wav"));
+    //private Music cryingBaby = Gdx.audio.newMusic(Gdx.files.internal("babycrying.wav"));
 
     private OrthographicCamera camera;
 
@@ -53,8 +50,6 @@ public class GameOverScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
 
-        //cryingBaby.play();
-
 
         batch.begin();
 
@@ -65,7 +60,6 @@ public class GameOverScreen implements Screen {
             Gdx.app.exit();
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            //cryingBaby.stop();
             alpha.setScreen(new MainMenuScreen(alpha));
         }
     }
@@ -94,7 +88,6 @@ public class GameOverScreen implements Screen {
     @Override
     public void dispose() {
 
-        cryingBaby.dispose();
         backgroundImage.dispose();
 
     }

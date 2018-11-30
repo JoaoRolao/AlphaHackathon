@@ -16,11 +16,13 @@ public class WaitingScreen implements Screen {
     private SpriteBatch batch;
     private float timePassed = 0f;
     private boolean isWaiting;
+    private float maxTime;
 
     private OrthographicCamera camera;
 
-    public WaitingScreen(Alpha game){
+    public WaitingScreen(Alpha game, float maxTime) {
 
+        this.maxTime = maxTime;
         this.alpha = game;
         this.batch = game.batch;
 
@@ -42,12 +44,11 @@ public class WaitingScreen implements Screen {
 
         timer();
 
-        if (isWaiting){
+        if (isWaiting) {
             Gdx.graphics.setWindowedMode(800, 480);
             alpha.setScreen(alpha.getMainMenuScreen());
 
         }
-
 
 
     }
@@ -79,13 +80,11 @@ public class WaitingScreen implements Screen {
 
     }
 
-    public void timer(){
+    public void timer() {
         timePassed += Gdx.graphics.getRawDeltaTime();
         System.out.println("time passed " + timePassed);
-        if (timePassed >= Constants.WAITING_TIME){
+        if (timePassed >= maxTime) {
             isWaiting = true;
-
-
 
 
         }

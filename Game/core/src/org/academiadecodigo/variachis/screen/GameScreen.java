@@ -206,7 +206,7 @@ public class GameScreen implements Screen {
             if (rSocks.overlaps(rCatcher)) {
                 score--;
                 yourScoreName = "score: " + score + "/20";
-                sockSound.setVolume(1,50);
+                sockSound.setVolume(1, 50);
                 sockSound.play();
                 iter.remove();
             }

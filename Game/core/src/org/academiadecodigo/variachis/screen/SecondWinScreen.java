@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.academiadecodigo.variachis.Alpha;
 
 public class SecondWinScreen implements Screen {
@@ -16,7 +15,7 @@ public class SecondWinScreen implements Screen {
     private SpriteBatch batch;
     private Texture backgroundImage;
     private Sprite backgroundSprite;
-    private StageTwo stageTwo;
+
 
     private OrthographicCamera camera;
 
@@ -29,14 +28,12 @@ public class SecondWinScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
-        stageTwo = new StageTwo(alpha);
 
     }
 
     @Override
     public void show() {
 
-        // TODO: 30/11/2018 change second game win image
         backgroundImage = new Texture("gamewin.png");
         backgroundSprite = new Sprite(backgroundImage);
 
@@ -52,8 +49,8 @@ public class SecondWinScreen implements Screen {
         batch.end();
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            alpha.setScreen(alpha.getMainMenuScreen());
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            alpha.setScreen(new MainMenuScreen(alpha));
             dispose();
         }
     }
@@ -80,6 +77,8 @@ public class SecondWinScreen implements Screen {
 
     @Override
     public void dispose() {
+        backgroundImage.dispose();
+
 
     }
 }
