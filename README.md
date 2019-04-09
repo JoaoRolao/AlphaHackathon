@@ -1,7 +1,7 @@
 # AlphaHackathon
 
-This project was developed at [<Academia de Código_>](https://www.academiadecodigo.org), during the 18º Bootcamp hackathon.
-
+This project was developed at [<Academia de Código_>](https://www.academiadecodigo.org), during the 18º Bootcamp hackathon. <br>
+![AcademiadeCodigo](https://course_report_production.s3.amazonaws.com/rich/rich_files/rich_files/610/s200/10959590-559874627482952-4712611408612078385-n.jpg)
 
 
 ## Development Tools
