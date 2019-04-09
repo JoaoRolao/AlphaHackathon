@@ -24,5 +24,5 @@ You will have three levels and the controls are allways the arrow keys.
 <RIGHT> - move right
 ```
 You will also have three lifes per level and a timer that if it reaches zero, you lose! It's pressure time! 
-![Queen](2wCEAAkGBwgHBhUUBxIWFhUVFxcYGRUVGBobGhodICAaGCEXGxUZHiggGCAmHx8eJjEiJSkrLi4wFyAzOjMvOTQ5Ly0BCgoKDg0OGxAQGjYmHyYtNy83MC8tLTcxLTUvLS0tNS0tKy0tMi8tLS8tLSswLS01LTUtLS0tKy0tLS0tNS0tNf)
+![Queen](https://www.goodvinil.pt/3676/freddie-mercury.jpg)
 
