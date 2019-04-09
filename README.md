@@ -15,7 +15,7 @@ In this project we used all our Java knowledge and also LibGdx fundamentals.
 The theme of our project was the Queen's song - "Under Pressure". From this song we created an app that pops up every 5,15,30 or 60 minutes according to the timer setted.
 This will pop up a game that has three levels of 30 seconds each and it's designed to relief pressure that employees at IT companies are used to. It will take only one and a half minute and will not take much time from the employee and will certainly increase the company productivity.  
 
-## Rules
+### Rules
 You will have three levels and the controls are allways the arrow keys.
 ```python
 <UP> - move up
