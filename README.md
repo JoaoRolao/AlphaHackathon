@@ -6,7 +6,9 @@ This project was developed at [<Academia de Código_>](https://www.academiadecod
 
 ## Development Tools
 
-In this project we used all our Java knowledge and also LibGdx fundamentals.
+In this project we used all our Java knowledge and also LibGdx fundamentals. <br>
+![JavaLogo](https://cms-production-assets.s3-ap-southeast-1.amazonaws.com/1/technology/java-logo.png)
+![LibGdxLogo](https://s.appbrain.com/static/201904011706879/blob/sdk-logos/libgdx.png)
 
 
 
