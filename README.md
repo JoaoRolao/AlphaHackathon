@@ -15,6 +15,11 @@ In this project we used all our Java knowledge and also LibGdx fundamentals.
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Rules
+You will have three levels and the controls are allways the arrow keys.
+```python
+<UP> - move up
+<DOWN> - move down
+<LEFT> - move left
+<RIGHT> - move right
 ```
-
-```
+You will also have three lifes per level and a timer that if it reaches zero, you lose! It's pressure time! 
