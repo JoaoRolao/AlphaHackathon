@@ -24,5 +24,5 @@ You will have three levels and the controls are allways the arrow keys.
 <RIGHT> - move right
 ```
 You will also have three lifes per level and a timer that if it reaches zero, you lose! It's pressure time! 
-![stack Overflow](http://lmsotfy.com/so.png)
+![Queen](https://cdn.shopify.com/s/files/1/0036/0506/9922/products/Queen_-_Freddie_Mercury_2_1024x1024.jpg?v=1541377614)
 
